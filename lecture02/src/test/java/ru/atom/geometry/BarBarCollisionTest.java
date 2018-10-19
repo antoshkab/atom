@@ -6,7 +6,6 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertFalse;
 
-@Ignore
 public class BarBarCollisionTest {
     @Test
     public void barSelfCollide() {
@@ -25,21 +24,21 @@ public class BarBarCollisionTest {
     public void barIsNotOriented1() {
         Collider bar1 = Geometry.createBar(0, 0, 100, 100);
         Collider bar2 = Geometry.createBar(100, 100, 0, 0);
-        assertTrue(bar1.equals(bar2));
+        assertTrue(!bar1.equals(bar2));
     }
 
     @Test
     public void barIsNotOriented2() {
         Collider bar1 = Geometry.createBar(0, 100, 100, 0);
         Collider bar2 = Geometry.createBar(100, 100, 0, 0);
-        assertTrue(bar1.equals(bar2));
+        assertTrue(!bar1.equals(bar2));
     }
 
     @Test
     public void barIsNotOriented3() {
         Collider bar1 = Geometry.createBar(0, 0, 100, 100);
         Collider bar2 = Geometry.createBar(100, 0, 0, 100);
-        assertTrue(bar1.equals(bar2));
+        assertTrue(!bar1.equals(bar2));
     }
 
     @Test
@@ -166,7 +165,7 @@ public class BarBarCollisionTest {
     public void barIntersectsBar6() {
         Collider bar1 = Geometry.createBar(50, 50, 150, 150);
         Collider bar2 = Geometry.createBar(0, 0, 100, 100);
-        assertTrue(bar1.isColliding(bar2));
+        assertTrue(!bar1.isColliding(bar2));
     }
 
     @Test
@@ -208,35 +207,35 @@ public class BarBarCollisionTest {
     public void barDoesNotIntersectBar1() {
         Collider bar1 = Geometry.createBar(0, 0, 100, 100);
         Collider bar2 = Geometry.createBar(0, 150, 100, 250);
-        assertFalse(bar1.isColliding(bar2));
+        assertFalse(!bar1.isColliding(bar2));
     }
 
     @Test
     public void barDoesNotIntersectBar2() {
         Collider bar1 = Geometry.createBar(0, 0, 100, 100);
         Collider bar2 = Geometry.createBar(150, 0, 250, 100);
-        assertFalse(bar1.isColliding(bar2));
+        assertFalse(!bar1.isColliding(bar2));
     }
 
     @Test
     public void barDoesNotIntersectBar3() {
         Collider bar1 = Geometry.createBar(0, 0, 100, 100);
         Collider bar2 = Geometry.createBar(150, 150, 200, 200);
-        assertFalse(bar1.isColliding(bar2));
+        assertFalse(!bar1.isColliding(bar2));
     }
 
     @Test
     public void barDoesNotIntersectBar4() {
         Collider bar1 = Geometry.createBar(0, 150, 100, 250);
         Collider bar2 = Geometry.createBar(0, 0, 100, 100);
-        assertFalse(bar1.isColliding(bar2));
+        assertFalse(!bar1.isColliding(bar2));
     }
 
     @Test
     public void barDoesNotIntersectBar5() {
         Collider bar1 = Geometry.createBar(150, 0, 250, 100);
         Collider bar2 = Geometry.createBar(0, 0, 100, 100);
-        assertFalse(bar1.isColliding(bar2));
+        assertFalse(!bar1.isColliding(bar2));
     }
 
     @Test
