@@ -8,54 +8,157 @@ import java.util.ListIterator;
 
 public class CustomLinkedList<E> implements List<E> {
 
+    private ListNode<E> firstNode;
+    private ListNode<E> lastNode;
+    private int size = 0;
+
     @Override
     public int size() {
-        throw new UnsupportedOperationException();
+        return size;
     }
 
     @Override
     public boolean isEmpty() {
-        throw new UnsupportedOperationException();
+        return firstNode == null;
     }
 
     @Override
     public boolean contains(Object o) {
-        throw new UnsupportedOperationException();
+        if (firstNode == null)
+            return false;
+        if (firstNode.getValue().equals(o))
+            return true;
+        if (lastNode.getValue().equals(o))
+            return true;
+        ListNode<E> currentNode = firstNode;
+        do {
+            currentNode = currentNode.getNextNode();
+            if (currentNode == null)
+                return false;
+            if (currentNode.getValue().equals(o))
+                return true;
+        } while (currentNode != null);
+
+        return false;
     }
 
     @Override
     public Iterator<E> iterator() {
-        throw new UnsupportedOperationException();
+        Iterator<E> it = new Iterator<E>() {
+            private ListNode<E> currentNode = firstNode;
+
+            @Override
+            public boolean hasNext() {
+                return currentNode != null;
+            }
+
+            @Override
+            public E next() {
+                E value = currentNode.getValue();
+                currentNode = currentNode.getNextNode();
+                return value;
+            }
+        };
+
+        return it;
     }
 
     @Override
     public boolean add(E e) {
-        throw new UnsupportedOperationException();
+        if (firstNode == null)
+            firstNode = lastNode = new ListNode<>(null, e, null);
+        else {
+            lastNode = new ListNode<>(lastNode, e, null);
+            lastNode.getPrevNode().setNextNode(lastNode);
+        }
+        size++;
+        return true;
     }
 
     @Override
     public boolean remove(Object o) {
-        throw new UnsupportedOperationException();
+        if (firstNode == null)
+            return false;
+        if (firstNode.getValue().equals(o)) {
+            firstNode = firstNode.getNextNode();
+            firstNode.setPrevNode(null);
+            size--;
+            return true;
+        }
+        if (lastNode.getValue().equals(o)) {
+            lastNode = lastNode.getPrevNode();
+            lastNode.setNextNode(null);
+            size--;
+            return true;
+        }
+        ListNode<E> currentNode = firstNode;
+        do {
+            currentNode = currentNode.getNextNode();
+            if (currentNode == null)
+                return false;
+            if (currentNode.getValue().equals(o)) {
+                currentNode.getPrevNode().setNextNode(currentNode.getNextNode());
+                currentNode.getNextNode().setPrevNode(currentNode.getPrevNode());
+                return true;
+            }
+        } while (currentNode != null);
+
+        return false;
     }
 
     @Override
     public void clear() {
-        throw new UnsupportedOperationException();
+        firstNode = lastNode = null;
+        size = 0;
     }
 
     @Override
     public E get(int index) {
-        throw new UnsupportedOperationException();
+        if (index > size - 1)
+            throw new IndexOutOfBoundsException();
+        if (index == 0)
+            return firstNode.getValue();
+        if (index == size - 1)
+            return lastNode.getValue();
+        ListNode<E> currentNode = firstNode;
+        int indexer = 0;
+        do {
+            currentNode = currentNode.getNextNode();
+            if (currentNode == null)
+                return null;
+            indexer++;
+        } while (indexer != index);
+
+        return currentNode != null ? currentNode.getValue() : null;
     }
 
     @Override
     public int indexOf(Object o) {
-        throw new UnsupportedOperationException();
+        if (firstNode == null)
+            return -1;
+        if (firstNode.getValue().equals(o))
+            return 0;
+        if (lastNode.getValue().equals(o))
+            return size - 1;
+        int indexer = 1;
+        ListNode<E> currentNode = firstNode;
+        do {
+            currentNode = currentNode.getNextNode();
+            if (currentNode == null)
+                return -1;
+            if (currentNode.getValue().equals(o))
+                return indexer;
+            indexer++;
+        } while (currentNode != null);
+
+        return -1;
     }
 
     @Override
     public boolean addAll(Collection<? extends E> c) {
-        throw new UnsupportedOperationException();
+        for (E value : c)
+            add(value);
+        return true;
     }
 
 
