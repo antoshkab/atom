@@ -33,9 +33,10 @@ public class Point implements Collider /* super class and interfaces here if nec
     public boolean isColliding(Collider other) {
         if (other instanceof Point)
             return this.equals(other);
-        if (other instanceof Bar){
+        if (other instanceof Bar) {
             Bar bar = (Bar)other;
-            return (bar.getFirstCornerX() <= x && x <= bar.getSecondCornerX()) && (bar.getFirstCornerY() <= y && y <= bar.getSecondCornerY());
+            return (bar.getFirstCornerX() <= x && x <= bar.getSecondCornerX())
+                    && (bar.getFirstCornerY() <= y && y <= bar.getSecondCornerY());
         }
         return false;
     }
@@ -45,7 +46,6 @@ public class Point implements Collider /* super class and interfaces here if nec
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return x == point.x &&
-                y == point.y;
+        return x == point.x && y == point.y;
     }
 }
