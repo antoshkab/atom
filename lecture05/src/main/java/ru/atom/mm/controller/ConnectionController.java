@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 import ru.atom.mm.model.Connection;
 import ru.atom.mm.service.ConnectionQueue;
 
@@ -39,6 +36,8 @@ public class ConnectionController {
                         @RequestParam("name") String name) {
 
         log.info("New connection id={} name={}", id, name);
+        if (connectionQueue == null)
+            connectionQueue = new ConnectionQueue();
         connectionQueue.getQueue().offer(new Connection(id, name));
     }
 
@@ -47,8 +46,21 @@ public class ConnectionController {
      *
      * curl -i localhost:8080/connection/list'
      */
+    @RequestMapping(
+            path = "list",
+            method = RequestMethod.GET,
+            consumes = MediaType.TEXT_PLAIN_VALUE)
+    @ResponseBody
     public String list() {
-        throw new UnsupportedOperationException();
+        log.info("Connection list request");
+        if (connectionQueue == null)
+            return "";
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Connection connection : connectionQueue.getQueue()) {
+            stringBuilder.append(connection.toString());
+            stringBuilder.append("%n");
+        }
+        return stringBuilder.toString();
     }
 
 
