@@ -81,7 +81,7 @@ public class UserDao implements Dao<User> {
     }
 
     public User getByName(String name) {
-        throw new UnsupportedOperationException();
+        return getAllWhere("chat.user.name = '" + name + "'").stream().findFirst().orElse(null);
     }
 
     private static User mapToUser(ResultSet rs) throws SQLException {

@@ -14,7 +14,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by sergey on 3/25/17.
  */
-@Ignore
 public class UserDaoTest {
     private UserDao userDao;
     private String login;
@@ -23,7 +22,7 @@ public class UserDaoTest {
 
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         userDao = new UserDao();
         login = "Lolita " + new Random().nextInt(999999);
         user = new User().setLogin(login);
@@ -33,17 +32,17 @@ public class UserDaoTest {
     }
 
     @Test
-    public void getAllTest() throws Exception {
+    public void getAllTest() {
         assertTrue(userDao.getAll().size() > 0);
     }
 
     @Test
-    public void insertTest() throws Exception {
+    public void insertTest() {
         assertEquals(usersBeforeTest + 1, userDao.getAll().size());
     }
 
     @Test
-    public void findWhereTest() throws Exception {
+    public void findWhereTest() {
         List<User> lol = userDao.getAllWhere("login like 'Lol%'");
         assertTrue(
                 lol.stream()

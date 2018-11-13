@@ -14,32 +14,37 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by sergey on 3/25/17.
  */
-@Ignore
 public class MessageDaoTest {
     private MessageDao messageDao;
     private String msg ;
     private Message message;
     private int messagesBeforeTest;
+    private int userId;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         messageDao = new MessageDao();
+        userId = new UserDao().getAll()
+                .stream()
+                .findFirst()
+                .get()
+                .getId();
         msg = "Hello World " + new Random().nextInt(999999);
         messagesBeforeTest = messageDao.getAll().size();
         message = new Message()
-                .setUser(new User().setId(7))
+                .setUser(new User().setId(userId))
                 .setValue(msg);
 
         messageDao.insert(message);
     }
 
     @Test
-    public void getAllTest() throws Exception {
+    public void getAllTest() {
         assertTrue(messageDao.getAll().size() > 0);
     }
 
     @Test
-    public void insertTest() throws Exception {
+    public void insertTest() {
         assertEquals(messagesBeforeTest + 1, messageDao.getAll().size());
     }
 
